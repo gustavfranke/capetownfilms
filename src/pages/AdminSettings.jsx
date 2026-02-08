@@ -58,6 +58,12 @@ export default function AdminSettings() {
       { key: "seo_description", label: "Meta Description", type: "textarea" },
       { key: "og_image_url", label: "OG Image URL", type: "text" },
     ]},
+    { section: "Appearance", items: [
+      { key: "theme", label: "Theme", type: "select", options: [
+        { value: "dark", label: "Dark" },
+        { value: "light", label: "Light" }
+      ]},
+    ]},
   ];
 
   return (
@@ -89,6 +95,18 @@ export default function AdminSettings() {
                       onChange={e => setForm({ ...form, [f.key]: e.target.value })}
                       className="mt-2 bg-white/5 border-white/10 text-white rounded-xl"
                     />
+                  ) : f.type === "select" ? (
+                    <select
+                      value={form[f.key] || ""}
+                      onChange={e => setForm({ ...form, [f.key]: e.target.value })}
+                      className="mt-2 w-full bg-white/5 border border-white/10 text-white rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    >
+                      {f.options.map(opt => (
+                        <option key={opt.value} value={opt.value} className="bg-stone-900">
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
                   ) : (
                     <Input
                       value={form[f.key] || ""}

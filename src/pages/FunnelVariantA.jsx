@@ -19,9 +19,12 @@ import FAQSection from "@/components/funnel/FAQSection";
 import FinalCTASection from "@/components/funnel/FinalCTASection";
 import LeadForm from "@/components/funnel/LeadForm";
 import StickyMobileCTA from "@/components/funnel/StickyMobileCTA";
+import EditableSection from "@/components/funnel/EditableSection";
+import SectionEditModal from "@/components/funnel/SectionEditModal";
 
 export default function FunnelVariantA() {
   const [formOpen, setFormOpen] = useState(false);
+  const [editModal, setEditModal] = useState({ open: false, section: null });
 
   const { data: variants } = useQuery({
     queryKey: ["pageVariants"],
@@ -85,20 +88,45 @@ export default function FunnelVariantA() {
 
   return (
     <div className="bg-stone-950 min-h-screen">
-      <HeroSection variant={variant} onCtaClick={handleCtaClick} />
+      <EditableSection sectionId="hero" onEdit={() => setEditModal({ open: true, section: "hero" })}>
+        <HeroSection variant={variant} onCtaClick={handleCtaClick} />
+      </EditableSection>
+      
       <CredibilityStrip />
-      <ProblemSection variant={variant} />
-      <SolutionSection variant={variant} />
-      <VaultRevealSection variant={variant} onCtaClick={handleCtaClick} />
+      
+      <EditableSection sectionId="problem" onEdit={() => setEditModal({ open: true, section: "problem" })}>
+        <ProblemSection variant={variant} />
+      </EditableSection>
+      
+      <EditableSection sectionId="solution" onEdit={() => setEditModal({ open: true, section: "solution" })}>
+        <SolutionSection variant={variant} />
+      </EditableSection>
+      
+      <EditableSection sectionId="vault" onEdit={() => setEditModal({ open: true, section: "vault" })}>
+        <VaultRevealSection variant={variant} onCtaClick={handleCtaClick} />
+      </EditableSection>
+      
       <BenefitCards />
-      <OfferSection variant={variant} />
+      
+      <EditableSection sectionId="offer" onEdit={() => setEditModal({ open: true, section: "offer" })}>
+        <OfferSection variant={variant} />
+      </EditableSection>
+      
       <SocialProofSection testimonials={testimonials} />
       <ObjectionSection />
       <ProcessTimeline variant={variant} />
       <VaultPreviewGrid categories={categories} onCtaClick={handleCtaClick} />
-      <AuthoritySection variant={variant} />
+      
+      <EditableSection sectionId="authority" onEdit={() => setEditModal({ open: true, section: "authority" })}>
+        <AuthoritySection variant={variant} />
+      </EditableSection>
+      
       <FAQSection faqs={faqs} />
-      <FinalCTASection variant={variant} onCtaClick={handleCtaClick} />
+      
+      <EditableSection sectionId="final_cta" onEdit={() => setEditModal({ open: true, section: "final_cta" })}>
+        <FinalCTASection variant={variant} onCtaClick={handleCtaClick} />
+      </EditableSection>
+      
       <StickyMobileCTA variant={variant} onCtaClick={handleCtaClick} />
 
       <AnimatePresence>
@@ -112,6 +140,13 @@ export default function FunnelVariantA() {
           />
         )}
       </AnimatePresence>
+
+      <SectionEditModal
+        isOpen={editModal.open}
+        onClose={() => setEditModal({ open: false, section: null })}
+        variant={variant}
+        sectionType={editModal.section}
+      />
 
       <footer className="bg-stone-950 border-t border-white/5 py-8 text-center">
         <p className="text-white/20 text-xs">&copy; {new Date().getFullYear()} {settings?.site_name || "Cape Town Wedding Films"}. All rights reserved.</p>
