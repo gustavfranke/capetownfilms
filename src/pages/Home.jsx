@@ -31,6 +31,17 @@ function getDeviceType() {
 function getOrAssignVariant(variants) {
   if (!variants || variants.length === 0) return null;
 
+  // Check URL parameter first (e.g., ?variant=variant-a)
+  const urlParams = new URLSearchParams(window.location.search);
+  const forceVariant = urlParams.get("variant");
+  if (forceVariant) {
+    const found = variants.find(v => v.slug === forceVariant);
+    if (found) {
+      sessionStorage.setItem("funnel_variant", found.slug);
+      return found;
+    }
+  }
+
   const stored = sessionStorage.getItem("funnel_variant");
   if (stored) {
     const found = variants.find(v => v.slug === stored && v.is_active);
