@@ -4,13 +4,33 @@ import { ChevronDown, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function HeroSection({ variant, onCtaClick }) {
+  const getVideoUrl = () => {
+    if (!variant?.hero_video_url) return "";
+    
+    let url = variant.hero_video_url;
+    const params = new URLSearchParams();
+    
+    if (variant.hero_video_start_time) {
+      params.append("start", variant.hero_video_start_time);
+    }
+    if (variant.hero_video_end_time) {
+      params.append("end", variant.hero_video_end_time);
+    }
+    
+    if (params.toString()) {
+      url += (url.includes("?") ? "&" : "?") + params.toString();
+    }
+    
+    return url;
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Video / Image */}
       <div className="absolute inset-0 z-0">
         {variant?.hero_video_url ? (
           <iframe
-            src={variant.hero_video_url}
+            src={getVideoUrl()}
             className="absolute w-[200%] h-[200%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
             frameBorder="0"
             allow="autoplay; fullscreen"

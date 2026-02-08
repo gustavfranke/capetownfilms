@@ -89,6 +89,8 @@ export default function AdminPages() {
     { key: "hero_cta_text", label: "CTA Button Text", type: "text" },
     { key: "hero_supporting_line", label: "Supporting Line", type: "text" },
     { key: "hero_video_url", label: "Hero Video URL", type: "text" },
+    { key: "hero_video_start_time", label: "Video Start Time (seconds)", type: "number" },
+    { key: "hero_video_end_time", label: "Video End Time (seconds)", type: "number" },
     { key: "hero_image_url", label: "Hero Image URL", type: "text" },
     { key: "problem_headline", label: "Problem Headline", type: "text" },
     { key: "problem_description", label: "Problem Description", type: "textarea" },
@@ -190,6 +192,13 @@ export default function AdminPages() {
                     value={formData[f.key] || ""}
                     onChange={e => setFormData({ ...formData, [f.key]: e.target.value })}
                     className="mt-2 bg-white/5 border-white/10 text-white rounded-xl min-h-[80px]"
+                  />
+                ) : f.type === "number" ? (
+                  <Input
+                    type="number"
+                    value={formData[f.key] || ""}
+                    onChange={e => setFormData({ ...formData, [f.key]: e.target.value ? parseInt(e.target.value) : null })}
+                    className="mt-2 bg-white/5 border-white/10 text-white rounded-xl"
                   />
                 ) : (
                   <Input

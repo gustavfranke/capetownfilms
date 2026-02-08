@@ -44,6 +44,8 @@ export default function SectionEditModal({ isOpen, onClose, variant, sectionType
           { key: "hero_cta_text", label: "CTA Button Text", type: "text" },
           { key: "hero_supporting_line", label: "Supporting Line", type: "text" },
           { key: "hero_video_url", label: "Video URL", type: "text" },
+          { key: "hero_video_start_time", label: "Video Start Time (seconds)", type: "number" },
+          { key: "hero_video_end_time", label: "Video End Time (seconds)", type: "number" },
           { key: "hero_image_url", label: "Image URL (fallback)", type: "text" },
         ];
       case "problem":
@@ -100,6 +102,13 @@ export default function SectionEditModal({ isOpen, onClose, variant, sectionType
                   onChange={e => setForm({ ...form, [field.key]: e.target.value })}
                   className="mt-2 bg-white/5 border-white/10 text-white"
                   rows={4}
+                />
+              ) : field.type === "number" ? (
+                <Input
+                  type="number"
+                  value={form[field.key] || ""}
+                  onChange={e => setForm({ ...form, [field.key]: e.target.value ? parseInt(e.target.value) : null })}
+                  className="mt-2 bg-white/5 border-white/10 text-white"
                 />
               ) : (
                 <Input
