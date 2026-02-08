@@ -47,38 +47,42 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
-import Home from './pages/Home';
-import ThankYou from './pages/ThankYou';
-import AdminDashboard from './pages/AdminDashboard';
-import AdminLeads from './pages/AdminLeads';
-import AdminPages from './pages/AdminPages';
 import AdminABTest from './pages/AdminABTest';
-import AdminMedia from './pages/AdminMedia';
-import AdminTestimonials from './pages/AdminTestimonials';
-import AdminFAQs from './pages/AdminFAQs';
-import AdminAutomations from './pages/AdminAutomations';
 import AdminAnalytics from './pages/AdminAnalytics';
+import AdminAutomations from './pages/AdminAutomations';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminFAQs from './pages/AdminFAQs';
+import AdminLeads from './pages/AdminLeads';
+import AdminMedia from './pages/AdminMedia';
+import AdminPages from './pages/AdminPages';
 import AdminSettings from './pages/AdminSettings';
+import AdminTestimonials from './pages/AdminTestimonials';
 import FunnelVariantA from './pages/FunnelVariantA';
 import FunnelVariantB from './pages/FunnelVariantB';
+import Home from './pages/Home';
+import ThankYou from './pages/ThankYou';
+import AdminSurvey from './pages/AdminSurvey';
+import AdminSurveyBuilder from './pages/AdminSurveyBuilder';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
-    "Home": Home,
-    "ThankYou": ThankYou,
-    "AdminDashboard": AdminDashboard,
-    "AdminLeads": AdminLeads,
-    "AdminPages": AdminPages,
     "AdminABTest": AdminABTest,
-    "AdminMedia": AdminMedia,
-    "AdminTestimonials": AdminTestimonials,
-    "AdminFAQs": AdminFAQs,
-    "AdminAutomations": AdminAutomations,
     "AdminAnalytics": AdminAnalytics,
+    "AdminAutomations": AdminAutomations,
+    "AdminDashboard": AdminDashboard,
+    "AdminFAQs": AdminFAQs,
+    "AdminLeads": AdminLeads,
+    "AdminMedia": AdminMedia,
+    "AdminPages": AdminPages,
     "AdminSettings": AdminSettings,
+    "AdminTestimonials": AdminTestimonials,
     "FunnelVariantA": FunnelVariantA,
     "FunnelVariantB": FunnelVariantB,
+    "Home": Home,
+    "ThankYou": ThankYou,
+    "AdminSurvey": AdminSurvey,
+    "AdminSurveyBuilder": AdminSurveyBuilder,
 }
 
 export const pagesConfig = {
