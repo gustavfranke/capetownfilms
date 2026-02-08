@@ -10,12 +10,15 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
-import { Pencil, Save, Loader2 } from "lucide-react";
+import { Pencil, Save, Loader2, Copy, Plus } from "lucide-react";
 
 export default function AdminPages() {
   const [editing, setEditing] = useState(null);
   const [formData, setFormData] = useState({});
   const [saving, setSaving] = useState(false);
+  const [duplicating, setDuplicating] = useState(null);
+  const [createNew, setCreateNew] = useState(false);
+  const [newPageForm, setNewPageForm] = useState({ name: "", slug: "", template: "" });
   const qc = useQueryClient();
 
   const { data: variants } = useQuery({
@@ -29,6 +32,16 @@ export default function AdminPages() {
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-variants"] }); setSaving(false); setEditing(null); },
   });
 
+  const createMut = useMutation({
+    mutationFn: (data) => base44.entities.PageVariant.create(data),
+    onSuccess: () => { 
+      qc.invalidateQueries({ queryKey: ["admin-variants"] }); 
+      setDuplicating(null); 
+      setCreateNew(false);
+      setNewPageForm({ name: "", slug: "", template: "" });
+    },
+  });
+
   const openEdit = (v) => {
     setFormData({ ...v });
     setEditing(v);
@@ -38,6 +51,35 @@ export default function AdminPages() {
     setSaving(true);
     const { id, created_date, updated_date, created_by, ...rest } = formData;
     updateMut.mutate({ id: editing.id, data: rest });
+  };
+
+  const handleDuplicate = (variant) => {
+    const { id, created_date, updated_date, created_by, ...data } = variant;
+    const newSlug = `${data.slug}-copy-${Date.now()}`;
+    const newData = {
+      ...data,
+      name: `${data.name} (Copy)`,
+      slug: newSlug,
+      is_active: false,
+      traffic_percent: 0,
+    };
+    setDuplicating(variant.id);
+    createMut.mutate(newData);
+  };
+
+  const handleCreateFromTemplate = () => {
+    const template = variants.find(v => v.id === newPageForm.template);
+    if (!template) return;
+    
+    const { id, created_date, updated_date, created_by, ...data } = template;
+    const newData = {
+      ...data,
+      name: newPageForm.name,
+      slug: newPageForm.slug,
+      is_active: false,
+      traffic_percent: 0,
+    };
+    createMut.mutate(newData);
   };
 
   const fields = [
@@ -64,9 +106,14 @@ export default function AdminPages() {
 
   return (
     <AdminLayout currentPage="AdminPages">
-      <div className="mb-8">
-        <h1 className="text-2xl font-light text-white">Landing Pages</h1>
-        <p className="text-white/40 text-sm mt-1">Manage funnel variant content</p>
+      <div className="mb-8 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-light text-white">Landing Pages</h1>
+          <p className="text-white/40 text-sm mt-1">Manage funnel variant content</p>
+        </div>
+        <Button onClick={() => setCreateNew(true)} className="bg-amber-600 hover:bg-amber-700 text-white rounded-xl">
+          <Plus className="w-4 h-4 mr-2" /> Create New Landing Page
+        </Button>
       </div>
 
       <div className="grid gap-6">
@@ -80,9 +127,21 @@ export default function AdminPages() {
                 </Badge>
                 <Badge className="bg-white/5 text-white/40">{v.traffic_percent}% traffic</Badge>
               </div>
-              <Button onClick={() => openEdit(v)} variant="outline" size="sm" className="border-white/10 text-white/60 hover:text-white">
-                <Pencil className="w-3.5 h-3.5 mr-1" /> Edit Content
-              </Button>
+              <div className="flex gap-2">
+                <Button 
+                  onClick={() => handleDuplicate(v)} 
+                  disabled={duplicating === v.id}
+                  variant="outline" 
+                  size="sm" 
+                  className="border-white/10 text-white/60 hover:text-white"
+                >
+                  {duplicating === v.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Copy className="w-3.5 h-3.5 mr-1" />}
+                  Duplicate
+                </Button>
+                <Button onClick={() => openEdit(v)} variant="outline" size="sm" className="border-white/10 text-white/60 hover:text-white">
+                  <Pencil className="w-3.5 h-3.5 mr-1" /> Edit Content
+                </Button>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="grid md:grid-cols-3 gap-4 text-sm">
@@ -143,6 +202,58 @@ export default function AdminPages() {
             ))}
             <Button onClick={handleSave} disabled={saving} className="w-full bg-amber-600 hover:bg-amber-700 text-white rounded-xl py-5">
               {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Save className="w-4 h-4 mr-2" /> Save Changes</>}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={createNew} onOpenChange={() => setCreateNew(false)}>
+        <DialogContent className="bg-stone-900 border-white/10 text-white max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="text-white font-light">Create New Landing Page</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 mt-4">
+            <div>
+              <Label className="text-white/60 text-sm">Page Name</Label>
+              <Input
+                placeholder="e.g., Mallorca Weddings"
+                value={newPageForm.name}
+                onChange={e => setNewPageForm({ ...newPageForm, name: e.target.value })}
+                className="mt-2 bg-white/5 border-white/10 text-white rounded-xl"
+              />
+            </div>
+            <div>
+              <Label className="text-white/60 text-sm">URL Slug</Label>
+              <Input
+                placeholder="e.g., mallorca-weddings"
+                value={newPageForm.slug}
+                onChange={e => setNewPageForm({ ...newPageForm, slug: e.target.value.toLowerCase().replace(/\s+/g, '-') })}
+                className="mt-2 bg-white/5 border-white/10 text-white rounded-xl"
+              />
+              <p className="text-white/30 text-xs mt-1">Used in URL: /funnel/{newPageForm.slug || 'your-slug'}</p>
+            </div>
+            <div>
+              <Label className="text-white/60 text-sm">Based on Template</Label>
+              <select
+                value={newPageForm.template}
+                onChange={e => setNewPageForm({ ...newPageForm, template: e.target.value })}
+                className="mt-2 w-full bg-white/5 border border-white/10 text-white rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              >
+                <option value="">Select a template...</option>
+                {variants.map(v => (
+                  <option key={v.id} value={v.id} className="bg-stone-900">
+                    {v.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <Button 
+              onClick={handleCreateFromTemplate} 
+              disabled={!newPageForm.name || !newPageForm.slug || !newPageForm.template || createMut.isPending}
+              className="w-full bg-amber-600 hover:bg-amber-700 text-white rounded-xl py-5"
+            >
+              {createMut.isPending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Plus className="w-4 h-4 mr-2" />}
+              Create Landing Page
             </Button>
           </div>
         </DialogContent>
