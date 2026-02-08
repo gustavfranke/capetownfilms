@@ -63,6 +63,9 @@ import Home from './pages/Home';
 import ThankYou from './pages/ThankYou';
 import AdminSurvey from './pages/AdminSurvey';
 import AdminSurveyBuilder from './pages/AdminSurveyBuilder';
+import AdminSurveyTriggers from './pages/AdminSurveyTriggers';
+import AdminSurveyDestinations from './pages/AdminSurveyDestinations';
+import AdminSurveyRules from './pages/AdminSurveyRules';
 import __Layout from './Layout.jsx';
 
 
@@ -83,6 +86,9 @@ export const PAGES = {
     "ThankYou": ThankYou,
     "AdminSurvey": AdminSurvey,
     "AdminSurveyBuilder": AdminSurveyBuilder,
+    "AdminSurveyTriggers": AdminSurveyTriggers,
+    "AdminSurveyDestinations": AdminSurveyDestinations,
+    "AdminSurveyRules": AdminSurveyRules,
 }
 
 export const pagesConfig = {
