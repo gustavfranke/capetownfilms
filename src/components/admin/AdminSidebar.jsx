@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import {
   LayoutDashboard, Users, FileText, TestTubes, Image, Star,
-  HelpCircle, Settings, Zap, BarChart3, ChevronLeft, ChevronRight
+  HelpCircle, Settings, Zap, BarChart3, ChevronLeft, ChevronRight, ClipboardList
 } from "lucide-react";
 
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, page: "AdminDashboard" },
   { label: "Leads", icon: Users, page: "AdminLeads" },
+  { label: "Survey", icon: ClipboardList, page: "AdminSurvey" },
   { label: "Landing Pages", icon: FileText, page: "AdminPages" },
   { label: "A/B Testing", icon: TestTubes, page: "AdminABTest" },
   { label: "Media Library", icon: Image, page: "AdminMedia" },

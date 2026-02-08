@@ -66,6 +66,7 @@ import AdminSurveyBuilder from './pages/AdminSurveyBuilder';
 import AdminSurveyTriggers from './pages/AdminSurveyTriggers';
 import AdminSurveyDestinations from './pages/AdminSurveyDestinations';
 import AdminSurveyRules from './pages/AdminSurveyRules';
+import AdminSurveySubmissions from './pages/AdminSurveySubmissions';
 import __Layout from './Layout.jsx';
 
 
@@ -89,6 +90,7 @@ export const PAGES = {
     "AdminSurveyTriggers": AdminSurveyTriggers,
     "AdminSurveyDestinations": AdminSurveyDestinations,
     "AdminSurveyRules": AdminSurveyRules,
+    "AdminSurveySubmissions": AdminSurveySubmissions,
 }
 
 export const pagesConfig = {

@@ -185,6 +185,26 @@ export default function AdminLeads() {
                 </div>
               )}
 
+              {selected.survey_completed && (
+                <div>
+                  <span className="text-white/30 text-xs uppercase tracking-wider">Survey Completed</span>
+                  <div className="mt-2">
+                    <Badge className="bg-green-500/20 text-green-400">Yes</Badge>
+                  </div>
+                </div>
+              )}
+
+              {selected.tags && selected.tags.length > 0 && (
+                <div>
+                  <span className="text-white/30 text-xs uppercase tracking-wider">Tags</span>
+                  <div className="flex gap-2 flex-wrap mt-2">
+                    {selected.tags.map(tag => (
+                      <Badge key={tag} className="bg-amber-500/20 text-amber-400">{tag}</Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div>
                 <span className="text-white/30 text-xs uppercase tracking-wider">Status</span>
                 <Select
