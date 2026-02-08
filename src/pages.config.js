@@ -49,14 +49,36 @@
  */
 import Home from './pages/Home';
 import ThankYou from './pages/ThankYou';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminLeads from './pages/AdminLeads';
+import AdminPages from './pages/AdminPages';
+import AdminABTest from './pages/AdminABTest';
+import AdminMedia from './pages/AdminMedia';
+import AdminTestimonials from './pages/AdminTestimonials';
+import AdminFAQs from './pages/AdminFAQs';
+import AdminAutomations from './pages/AdminAutomations';
+import AdminAnalytics from './pages/AdminAnalytics';
+import AdminSettings from './pages/AdminSettings';
+import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "Home": Home,
     "ThankYou": ThankYou,
+    "AdminDashboard": AdminDashboard,
+    "AdminLeads": AdminLeads,
+    "AdminPages": AdminPages,
+    "AdminABTest": AdminABTest,
+    "AdminMedia": AdminMedia,
+    "AdminTestimonials": AdminTestimonials,
+    "AdminFAQs": AdminFAQs,
+    "AdminAutomations": AdminAutomations,
+    "AdminAnalytics": AdminAnalytics,
+    "AdminSettings": AdminSettings,
 }
 
 export const pagesConfig = {
     mainPage: "Home",
     Pages: PAGES,
+    Layout: __Layout,
 };
