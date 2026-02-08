@@ -66,31 +66,9 @@ function getOrAssignVariant(variants) {
 }
 
 export default function Home() {
-  const [formOpen, setFormOpen] = useState(false);
-  const [variant, setVariant] = useState(null);
-  const trackedView = useRef(false);
-
   const { data: variants } = useQuery({
     queryKey: ["pageVariants"],
     queryFn: () => base44.entities.PageVariant.list(),
-    initialData: [],
-  });
-
-  const { data: testimonials } = useQuery({
-    queryKey: ["testimonials"],
-    queryFn: () => base44.entities.Testimonial.list(),
-    initialData: [],
-  });
-
-  const { data: faqs } = useQuery({
-    queryKey: ["faqs"],
-    queryFn: () => base44.entities.FAQ.list("sort_order"),
-    initialData: [],
-  });
-
-  const { data: categories } = useQuery({
-    queryKey: ["vendorCategories"],
-    queryFn: () => base44.entities.VendorCategory.list(),
     initialData: [],
   });
 
@@ -103,86 +81,29 @@ export default function Home() {
   const settings = settingsArr?.[0];
 
   useEffect(() => {
-    if (variants.length > 0 && !variant) {
-      const v = getOrAssignVariant(variants);
-      setVariant(v);
-    }
-  }, [variants, variant]);
+    if (variants.length === 0) return;
 
-  useEffect(() => {
-    if (variant && !trackedView.current) {
-      trackedView.current = true;
-      base44.entities.AnalyticsEvent.create({
-        event_type: "page_view",
-        variant: variant.slug,
-        device_type: getDeviceType(),
-      }).catch(() => {});
+    // Check if split testing is disabled
+    if (!settings?.split_test_enabled) {
+      window.location.href = createPageUrl("FunnelVariantA");
+      return;
     }
-  }, [variant]);
 
-  const trackEvent = useCallback((type) => {
+    // Get or assign variant
+    const variant = getOrAssignVariant(variants);
     if (!variant) return;
-    base44.entities.AnalyticsEvent.create({
-      event_type: type,
-      variant: variant.slug,
-      device_type: getDeviceType(),
-    }).catch(() => {});
-  }, [variant]);
 
-  const handleCtaClick = useCallback(() => {
-    trackEvent("cta_click");
-    setFormOpen(true);
-  }, [trackEvent]);
-
-  const handleFormSubmit = async (data) => {
-    trackEvent("form_submit");
-    await base44.entities.Lead.create({ ...data, status: "new" });
-    setFormOpen(false);
-    window.location.href = createPageUrl("ThankYou") + "?variant=" + (variant?.slug || "");
-  };
-
-  if (!variant) {
-    return (
-      <div className="min-h-screen bg-stone-950 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
+    // Redirect to the appropriate variant page
+    if (variant.slug === "variant-b") {
+      window.location.href = createPageUrl("FunnelVariantB");
+    } else {
+      window.location.href = createPageUrl("FunnelVariantA");
+    }
+  }, [variants, settings]);
 
   return (
-    <div className="bg-stone-950 min-h-screen">
-      <HeroSection variant={variant} onCtaClick={handleCtaClick} />
-      <CredibilityStrip />
-      <ProblemSection variant={variant} />
-      <SolutionSection variant={variant} />
-      <VaultRevealSection variant={variant} onCtaClick={handleCtaClick} />
-      <BenefitCards />
-      <OfferSection variant={variant} />
-      <SocialProofSection testimonials={testimonials} />
-      <ObjectionSection />
-      <ProcessTimeline variant={variant} />
-      <VaultPreviewGrid categories={categories} onCtaClick={handleCtaClick} />
-      <AuthoritySection variant={variant} />
-      <FAQSection faqs={faqs} />
-      <FinalCTASection variant={variant} onCtaClick={handleCtaClick} />
-      <StickyMobileCTA variant={variant} onCtaClick={handleCtaClick} />
-
-      <AnimatePresence>
-        {formOpen && (
-          <LeadForm
-            isOpen={formOpen}
-            variant={variant}
-            settings={settings}
-            onSubmit={handleFormSubmit}
-            onClose={() => setFormOpen(false)}
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Footer */}
-      <footer className="bg-stone-950 border-t border-white/5 py-8 text-center">
-        <p className="text-white/20 text-xs">&copy; {new Date().getFullYear()} {settings?.site_name || "Cape Town Wedding Films"}. All rights reserved.</p>
-      </footer>
+    <div className="min-h-screen bg-stone-950 flex items-center justify-center">
+      <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
     </div>
   );
 }

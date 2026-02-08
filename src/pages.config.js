@@ -59,6 +59,8 @@ import AdminFAQs from './pages/AdminFAQs';
 import AdminAutomations from './pages/AdminAutomations';
 import AdminAnalytics from './pages/AdminAnalytics';
 import AdminSettings from './pages/AdminSettings';
+import FunnelVariantA from './pages/FunnelVariantA';
+import FunnelVariantB from './pages/FunnelVariantB';
 import __Layout from './Layout.jsx';
 
 
@@ -75,6 +77,8 @@ export const PAGES = {
     "AdminAutomations": AdminAutomations,
     "AdminAnalytics": AdminAnalytics,
     "AdminSettings": AdminSettings,
+    "FunnelVariantA": FunnelVariantA,
+    "FunnelVariantB": FunnelVariantB,
 }
 
 export const pagesConfig = {
