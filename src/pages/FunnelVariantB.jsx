@@ -21,9 +21,13 @@ import LeadForm from "@/components/funnel/LeadForm";
 import StickyMobileCTA from "@/components/funnel/StickyMobileCTA";
 import EditableSection from "@/components/funnel/EditableSection";
 import SectionEditModal from "@/components/funnel/SectionEditModal";
+import SurveyModal from "@/components/survey/SurveyModal";
+import SurveyTrigger from "@/components/survey/SurveyTrigger";
 
 export default function FunnelVariantB() {
   const [formOpen, setFormOpen] = useState(false);
+  const [surveyOpen, setSurveyOpen] = useState(false);
+  const [ctaTriggerActive, setCtaTriggerActive] = useState(false);
   const [editModal, setEditModal] = useState({ open: false, section: null });
 
   const { data: variants } = useQuery({
@@ -56,6 +60,38 @@ export default function FunnelVariantB() {
     initialData: [],
   });
 
+  const { data: surveyQuestionsConfig } = useQuery({
+    queryKey: ["survey-config-questions"],
+    queryFn: async () => {
+      const configs = await base44.entities.SurveyConfig.filter({ config_key: "questions" });
+      return configs[0] || null;
+    },
+  });
+
+  const { data: surveyTriggersConfig } = useQuery({
+    queryKey: ["survey-config-triggers"],
+    queryFn: async () => {
+      const configs = await base44.entities.SurveyConfig.filter({ config_key: "triggers" });
+      return configs[0] || null;
+    },
+  });
+
+  const { data: surveyDestinationsConfig } = useQuery({
+    queryKey: ["survey-config-destinations"],
+    queryFn: async () => {
+      const configs = await base44.entities.SurveyConfig.filter({ config_key: "destinations" });
+      return configs[0] || null;
+    },
+  });
+
+  const { data: surveyRulesConfig } = useQuery({
+    queryKey: ["survey-config-rules"],
+    queryFn: async () => {
+      const configs = await base44.entities.SurveyConfig.filter({ config_key: "rules" });
+      return configs[0] || null;
+    },
+  });
+
   const variant = variants.find(v => v.slug === "variant-b") || variants[1];
   const settings = settingsArr?.[0];
 
@@ -70,7 +106,7 @@ export default function FunnelVariantB() {
 
   const handleCtaClick = useCallback(() => {
     trackEvent("cta_click");
-    setFormOpen(true);
+    setCtaTriggerActive(true);
   }, [trackEvent]);
 
   const handleFormSubmit = async (data) => {
@@ -78,6 +114,58 @@ export default function FunnelVariantB() {
     await base44.entities.Lead.create({ ...data, status: "new" });
     setFormOpen(false);
     window.location.href = "/ThankYou?variant=variant-b";
+  };
+
+  const applyRules = (answers) => {
+    const rules = surveyRulesConfig?.rules || [];
+    const tags = [];
+    
+    rules.forEach(rule => {
+      const allConditionsMet = rule.conditions.every(cond => {
+        const answerValue = answers[cond.field];
+        if (cond.operator === "equals") {
+          return answerValue === cond.value;
+        }
+        if (cond.operator === "contains") {
+          return Array.isArray(answerValue) && answerValue.includes(cond.value);
+        }
+        return false;
+      });
+      
+      if (allConditionsMet) {
+        rule.actions.forEach(action => {
+          if (action.type === "add_tag") tags.push(action.value);
+        });
+      }
+    });
+    
+    return tags;
+  };
+
+  const handleSurveyComplete = async (answers) => {
+    trackEvent("survey_completed");
+    
+    const tags = applyRules(answers);
+    
+    const lead = await base44.entities.Lead.create({
+      name: answers.full_name,
+      email: answers.email,
+      phone: answers.whatsapp_number,
+      wedding_date: answers.wedding_date,
+      guest_count: answers.guest_count,
+      funnel_variant: "variant-b",
+      status: "new",
+      tags,
+      survey_completed: true
+    });
+    
+    await base44.entities.SurveyResponse.create({
+      lead_id: lead.id,
+      page_variant_id: variant?.id,
+      answers,
+      tags,
+      completed: true
+    });
   };
 
   useEffect(() => {
@@ -128,6 +216,32 @@ export default function FunnelVariantB() {
       </EditableSection>
       
       <StickyMobileCTA variant={variant} onCtaClick={handleCtaClick} />
+
+      <SurveyTrigger
+        triggers={surveyTriggersConfig?.triggers || {}}
+        onTrigger={() => setSurveyOpen(true)}
+        isOpen={surveyOpen}
+        ctaTriggerActive={ctaTriggerActive}
+      />
+
+      <AnimatePresence>
+        {surveyOpen && (
+          <SurveyModal
+            isOpen={surveyOpen}
+            onClose={() => {
+              setSurveyOpen(false);
+              setCtaTriggerActive(false);
+            }}
+            questions={surveyQuestionsConfig?.questions || []}
+            config={{
+              destinations: surveyDestinationsConfig?.destinations || {},
+              remember_progress: true
+            }}
+            onComplete={handleSurveyComplete}
+            variantId={variant?.id}
+          />
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {formOpen && (
