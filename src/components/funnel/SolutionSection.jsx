@@ -58,7 +58,7 @@ export default function SolutionSection({ variant }) {
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69889f3b2c947c84f1f46fdb/140afff63_coupleshot_251.jpg"
                 alt="Cinematic wedding"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-[60%]"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 via-transparent to-transparent" />
