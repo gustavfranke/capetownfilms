@@ -6,7 +6,14 @@ import { Button } from "@/components/ui/button";
 export default function VaultRevealSection({ variant, onCtaClick }) {
   return (
     <section className="bg-stone-950 py-20 md:py-32 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-900/10 via-transparent to-transparent" />
+      <div className="absolute inset-0">
+        <img
+          src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69889f3b2c947c84f1f46fdb/7d75e68f1_Still2026-02-17171922_171.jpg"
+          alt="Elegant wedding venue"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-stone-950/80" />
+      </div>
       <div className="relative max-w-4xl mx-auto px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
