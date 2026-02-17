@@ -4,9 +4,9 @@ import { Film, Award, Users, Calendar } from "lucide-react";
 
 const stats = [
   { icon: Calendar, value: "12+", label: "Years Experience" },
-  { icon: Film, value: "300+", label: "Weddings Filmed" },
+  { icon: Film, value: "100+", label: "Weddings Filmed" },
   { icon: Award, value: "Premium", label: "Quality Only" },
-  { icon: Users, value: "50+", label: "Trusted Vendors" },
+  { icon: Users, value: "25+", label: "Trusted Vendors" },
 ];
 
 export default function CredibilityStrip() {

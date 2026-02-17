@@ -56,17 +56,18 @@ import AdminLeads from './pages/AdminLeads';
 import AdminMedia from './pages/AdminMedia';
 import AdminPages from './pages/AdminPages';
 import AdminSettings from './pages/AdminSettings';
+import AdminSurvey from './pages/AdminSurvey';
+import AdminSurveyBuilder from './pages/AdminSurveyBuilder';
+import AdminSurveyDestinations from './pages/AdminSurveyDestinations';
+import AdminSurveyRules from './pages/AdminSurveyRules';
+import AdminSurveySubmissions from './pages/AdminSurveySubmissions';
+import AdminSurveyTriggers from './pages/AdminSurveyTriggers';
 import AdminTestimonials from './pages/AdminTestimonials';
 import FunnelVariantA from './pages/FunnelVariantA';
 import FunnelVariantB from './pages/FunnelVariantB';
 import Home from './pages/Home';
 import ThankYou from './pages/ThankYou';
-import AdminSurvey from './pages/AdminSurvey';
-import AdminSurveyBuilder from './pages/AdminSurveyBuilder';
-import AdminSurveyTriggers from './pages/AdminSurveyTriggers';
-import AdminSurveyDestinations from './pages/AdminSurveyDestinations';
-import AdminSurveyRules from './pages/AdminSurveyRules';
-import AdminSurveySubmissions from './pages/AdminSurveySubmissions';
+import SannaAfrika from './pages/SannaAfrika';
 import __Layout from './Layout.jsx';
 
 
@@ -80,17 +81,18 @@ export const PAGES = {
     "AdminMedia": AdminMedia,
     "AdminPages": AdminPages,
     "AdminSettings": AdminSettings,
+    "AdminSurvey": AdminSurvey,
+    "AdminSurveyBuilder": AdminSurveyBuilder,
+    "AdminSurveyDestinations": AdminSurveyDestinations,
+    "AdminSurveyRules": AdminSurveyRules,
+    "AdminSurveySubmissions": AdminSurveySubmissions,
+    "AdminSurveyTriggers": AdminSurveyTriggers,
     "AdminTestimonials": AdminTestimonials,
     "FunnelVariantA": FunnelVariantA,
     "FunnelVariantB": FunnelVariantB,
     "Home": Home,
     "ThankYou": ThankYou,
-    "AdminSurvey": AdminSurvey,
-    "AdminSurveyBuilder": AdminSurveyBuilder,
-    "AdminSurveyTriggers": AdminSurveyTriggers,
-    "AdminSurveyDestinations": AdminSurveyDestinations,
-    "AdminSurveyRules": AdminSurveyRules,
-    "AdminSurveySubmissions": AdminSurveySubmissions,
+    "SannaAfrika": SannaAfrika,
 }
 
 export const pagesConfig = {
