@@ -56,7 +56,7 @@ export default function SolutionSection({ variant }) {
           >
             <div className="aspect-[4/5] rounded-3xl overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=800"
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69889f3b2c947c84f1f46fdb/140afff63_coupleshot_251.jpg"
                 alt="Cinematic wedding"
                 className="w-full h-full object-cover"
                 loading="lazy"
