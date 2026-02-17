@@ -99,7 +99,7 @@ export default function SannaAfrika() {
     if (!variant) return;
     base44.entities.AnalyticsEvent.create({
       event_type: type,
-      variant: "sanna-afrika",
+      variant: "variant-a",
       device_type: window.innerWidth < 768 ? "mobile" : window.innerWidth < 1024 ? "tablet" : "desktop",
     }).catch(() => {});
   }, [variant]);
@@ -113,7 +113,7 @@ export default function SannaAfrika() {
     trackEvent("form_submit");
     await base44.entities.Lead.create({ ...data, status: "new" });
     setFormOpen(false);
-    window.location.href = "/ThankYou?variant=sanna-afrika";
+    window.location.href = "/ThankYou?variant=variant-a";
   };
 
   const applyRules = (answers) => {
@@ -154,7 +154,7 @@ export default function SannaAfrika() {
       phone: answers.whatsapp_number,
       wedding_date: answers.wedding_date,
       guest_count: answers.guest_count,
-      funnel_variant: "sanna-afrika",
+      funnel_variant: "variant-a",
       status: "new",
       tags,
       survey_completed: true
