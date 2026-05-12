@@ -77,7 +77,7 @@ export default function HeroSection({ variant, onCtaClick }) {
               size="lg"
               className="bg-amber-600 hover:bg-amber-700 text-white px-10 py-6 text-lg rounded-full font-medium tracking-wide shadow-2xl shadow-amber-900/30 transition-all duration-300 hover:scale-105 hover:shadow-amber-900/50"
             >
-              {variant?.hero_cta_text || "Request Availability"}
+              {variant?.hero_cta_text || "Access The Luxury Vendor Vault"}
             </Button>
             <span className="text-white/40 text-sm tracking-wider uppercase">
               {variant?.hero_supporting_line || "Limited bookings per season."}
