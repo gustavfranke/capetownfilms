@@ -68,6 +68,10 @@ import FunnelVariantB from './pages/FunnelVariantB';
 import Home from './pages/Home';
 import ThankYou from './pages/ThankYou';
 import SannaAfrika from './pages/SannaAfrika';
+import AdminQuizBuilder from './pages/AdminQuizBuilder';
+import AdminContactForms from './pages/AdminContactForms';
+import AdminSEOManager from './pages/AdminSEOManager';
+import AdminBlogBuilder from './pages/AdminBlogBuilder';
 import __Layout from './Layout.jsx';
 
 
@@ -93,6 +97,10 @@ export const PAGES = {
     "Home": Home,
     "ThankYou": ThankYou,
     "SannaAfrika": SannaAfrika,
+    "AdminQuizBuilder": AdminQuizBuilder,
+    "AdminContactForms": AdminContactForms,
+    "AdminSEOManager": AdminSEOManager,
+    "AdminBlogBuilder": AdminBlogBuilder,
 }
 
 export const pagesConfig = {

@@ -1,0 +1,79 @@
+{
+  "name": "BlogPost",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "slug": {
+      "type": "string",
+      "title": "Slug"
+    },
+    "body": {
+      "type": "string",
+      "title": "Body"
+    },
+    "excerpt": {
+      "type": "string",
+      "title": "Excerpt"
+    },
+    "cover_image_url": {
+      "type": "string",
+      "title": "Cover Image URL"
+    },
+    "focus_keyword": {
+      "type": "string",
+      "title": "Focus Keyword"
+    },
+    "meta_title": {
+      "type": "string",
+      "title": "Meta Title"
+    },
+    "meta_description": {
+      "type": "string",
+      "title": "Meta Description"
+    },
+    "target_audience": {
+      "type": "string",
+      "enum": [
+        "local_sa",
+        "destination_us",
+        "destination_eu",
+        "venue_seo",
+        "general"
+      ],
+      "title": "Target Audience"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "needs_humanize",
+        "humanized",
+        "published"
+      ],
+      "title": "Status"
+    },
+    "venue_tag": {
+      "type": "string",
+      "title": "Venue Tag"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Generated At"
+    },
+    "humanized_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Humanized At"
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Published At"
+    }
+  },
+  "required": []
+}

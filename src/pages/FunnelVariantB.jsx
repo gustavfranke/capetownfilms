@@ -22,11 +22,13 @@ import StickyMobileCTA from "@/components/funnel/StickyMobileCTA";
 import EditableSection from "@/components/funnel/EditableSection";
 import SectionEditModal from "@/components/funnel/SectionEditModal";
 import SurveyModal from "@/components/survey/SurveyModal";
+import WeddingQuiz from "@/components/WeddingQuiz";
 import SurveyTrigger from "@/components/survey/SurveyTrigger";
 
 export default function FunnelVariantB() {
   const [formOpen, setFormOpen] = useState(false);
   const [surveyOpen, setSurveyOpen] = useState(false);
+  const [quizOpen, setQuizOpen] = useState(false);
   const [ctaTriggerActive, setCtaTriggerActive] = useState(false);
   const [editModal, setEditModal] = useState({ open: false, section: null });
 
@@ -59,6 +61,16 @@ export default function FunnelVariantB() {
     queryFn: () => base44.entities.SiteSettings.list(),
     initialData: [],
   });
+
+  const { data: liveQuiz } = useQuery({
+    queryKey: ["live-quiz"],
+    queryFn: async () => {
+      const quizzes = await base44.entities.Quiz.filter({ status: "live" });
+      return quizzes[0] || null;
+    },
+  });
+
+  const useQuiz = !!liveQuiz;
 
   const { data: surveyQuestionsConfig } = useQuery({
     queryKey: ["survey-config-questions"],
@@ -106,8 +118,12 @@ export default function FunnelVariantB() {
 
   const handleCtaClick = useCallback(() => {
     trackEvent("cta_click");
-    setCtaTriggerActive(true);
-  }, [trackEvent]);
+    if (useQuiz) {
+      setQuizOpen(true);
+    } else {
+      setCtaTriggerActive(true);
+    }
+  }, [trackEvent, useQuiz]);
 
   const handleFormSubmit = async (data) => {
     trackEvent("form_submit");
@@ -255,6 +271,8 @@ export default function FunnelVariantB() {
         )}
       </AnimatePresence>
 
+      <WeddingQuiz isOpen={quizOpen} onClose={() => setQuizOpen(false)} />
+
       <SectionEditModal
         isOpen={editModal.open}
         onClose={() => setEditModal({ open: false, section: null })}
@@ -263,7 +281,7 @@ export default function FunnelVariantB() {
       />
 
       <footer className="bg-stone-950 border-t border-white/5 py-8 text-center">
-        <p className="text-white/20 text-xs">&copy; {new Date().getFullYear()} {settings?.site_name || "Cape Town Wedding Films"}. All rights reserved.</p>
+        <p className="text-white/20 text-xs">&copy; {new Date().getFullYear()} {settings?.site_name || "Gustav Franke"}. All rights reserved.</p>
       </footer>
     </div>
   );

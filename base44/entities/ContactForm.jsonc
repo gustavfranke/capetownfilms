@@ -1,0 +1,85 @@
+{
+  "name": "ContactForm",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "heading": {
+      "type": "string",
+      "title": "Heading"
+    },
+    "subheading": {
+      "type": "string",
+      "title": "Subheading"
+    },
+    "fields": {
+      "type": "array",
+      "title": "Fields",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "text",
+              "email",
+              "tel",
+              "date",
+              "textarea",
+              "select"
+            ]
+          },
+          "placeholder": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "button_text": {
+      "type": "string",
+      "title": "Button Text"
+    },
+    "success_heading": {
+      "type": "string",
+      "title": "Success Heading"
+    },
+    "success_message": {
+      "type": "string",
+      "title": "Success Message"
+    },
+    "privacy_text": {
+      "type": "string",
+      "title": "Privacy Text"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive"
+      ],
+      "title": "Status"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": []
+}

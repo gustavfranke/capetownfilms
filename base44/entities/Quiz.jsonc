@@ -1,0 +1,104 @@
+{
+  "name": "Quiz",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "slug": {
+      "type": "string",
+      "title": "Slug"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "live",
+        "archived"
+      ],
+      "title": "Status"
+    },
+    "questions": {
+      "type": "array",
+      "title": "Questions",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "single_select",
+              "multi_select",
+              "contact_step"
+            ]
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                },
+                "emoji": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "helper_text": {
+            "type": "string"
+          },
+          "order": {
+            "type": "number"
+          },
+          "required": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "show_progress_bar": {
+      "type": "boolean",
+      "title": "Show Progress Bar"
+    },
+    "completion_headline": {
+      "type": "string",
+      "title": "Completion Headline"
+    },
+    "completion_subtext": {
+      "type": "string",
+      "title": "Completion Subtext"
+    },
+    "optin_form_id": {
+      "type": "string",
+      "title": "Optin Form ID"
+    },
+    "tag_rules": {
+      "type": "array",
+      "title": "Tag Rules",
+      "items": {
+        "type": "object"
+      }
+    },
+    "total_responses": {
+      "type": "number",
+      "title": "Total Responses"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes"
+    }
+  },
+  "required": []
+}

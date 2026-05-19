@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import {
   LayoutDashboard, Users, FileText, TestTubes, Image, Star,
-  HelpCircle, Settings, Zap, BarChart3, ChevronLeft, ChevronRight, ClipboardList
+  HelpCircle, Settings, Zap, BarChart3, ChevronLeft, ChevronRight, ClipboardList,
+  PenTool, FormInput, Search, BookOpen
 } from "lucide-react";
 
 const navItems = [
@@ -18,6 +19,10 @@ const navItems = [
   { label: "Automations", icon: Zap, page: "AdminAutomations" },
   { label: "Analytics", icon: BarChart3, page: "AdminAnalytics" },
   { label: "Settings", icon: Settings, page: "AdminSettings" },
+  { label: "Quiz Builder", icon: PenTool, page: "AdminQuizBuilder" },
+  { label: "Contact Forms", icon: FormInput, page: "AdminContactForms" },
+  { label: "SEO Manager", icon: Search, page: "AdminSEOManager" },
+  { label: "Blog Builder", icon: BookOpen, page: "AdminBlogBuilder" },
 ];
 
 export default function AdminSidebar({ currentPage, collapsed, onToggle }) {
