@@ -5,6 +5,9 @@ import NavigationTracker from '@/lib/NavigationTracker'
 import { pagesConfig } from './pages.config'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
+import About from './pages/About';
+import Films from './pages/Films';
+import BookMe from './pages/BookMe';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 
@@ -58,6 +61,9 @@ const AuthenticatedApp = () => {
           }
         />
       ))}
+      <Route path="/about" element={<LayoutWrapper currentPageName="about"><About /></LayoutWrapper>} />
+      <Route path="/films" element={<LayoutWrapper currentPageName="films"><Films /></LayoutWrapper>} />
+      <Route path="/book-me" element={<LayoutWrapper currentPageName="book-me"><BookMe /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

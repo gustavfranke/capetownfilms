@@ -1,8 +1,17 @@
 import React from "react";
+import SiteNav from "./components/SiteNav";
+
+const PUBLIC_PAGES = ["Home", "about", "films", "book-me", ""];
 
 export default function Layout({ children, currentPageName }) {
-  // No layout wrapping for funnel pages - they handle their own full-screen layout
-  // Admin pages use AdminLayout component internally
+  const isAdminOrFunnel =
+    !currentPageName ||
+    currentPageName.startsWith("Admin") ||
+    currentPageName.startsWith("Funnel") ||
+    currentPageName.startsWith("Survey") ||
+    currentPageName === "ThankYou" ||
+    currentPageName === "SannaAfrika";
+
   return (
     <div className="min-h-screen">
       <style>{`
@@ -36,6 +45,7 @@ export default function Layout({ children, currentPageName }) {
         *::-webkit-scrollbar-track { background: transparent; }
         *::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
       `}</style>
+      {!isAdminOrFunnel && <SiteNav />}
       {children}
     </div>
   );

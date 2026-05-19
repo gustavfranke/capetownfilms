@@ -72,6 +72,9 @@ import AdminQuizBuilder from './pages/AdminQuizBuilder';
 import AdminContactForms from './pages/AdminContactForms';
 import AdminSEOManager from './pages/AdminSEOManager';
 import AdminBlogBuilder from './pages/AdminBlogBuilder';
+import About from './pages/About';
+import Films from './pages/Films';
+import BookMe from './pages/BookMe';
 import __Layout from './Layout.jsx';
 
 
@@ -101,10 +104,13 @@ export const PAGES = {
     "AdminContactForms": AdminContactForms,
     "AdminSEOManager": AdminSEOManager,
     "AdminBlogBuilder": AdminBlogBuilder,
+    "about": About,
+    "films": Films,
+    "book-me": BookMe,
 }
 
 export const pagesConfig = {
-    mainPage: "FunnelVariantA",
+    mainPage: "Home",
     Pages: PAGES,
     Layout: __Layout,
 };
