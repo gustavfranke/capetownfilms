@@ -137,7 +137,6 @@ export default function WeddingQuiz({ isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm">
-      {/* Close button */}
       <button
         onClick={onClose}
         className="absolute top-5 right-5 text-white/40 hover:text-white transition-colors z-10"
@@ -146,7 +145,6 @@ export default function WeddingQuiz({ isOpen, onClose }) {
       </button>
 
       <div className="w-full max-w-xl mx-4 relative">
-        {/* Progress bar */}
         {!done && totalSteps > 0 && (
           <div className="mb-8">
             <div className="flex justify-between text-white/30 text-xs mb-2">
@@ -155,7 +153,7 @@ export default function WeddingQuiz({ isOpen, onClose }) {
             </div>
             <div className="h-0.5 bg-white/10 rounded-full overflow-hidden">
               <div
-                className="h-full bg-yellow-500 rounded-full transition-all duration-500"
+                className="h-full rounded-full transition-all duration-500"
                 style={{ width: `${progress}%`, backgroundColor: "#c9a84c" }}
               />
             </div>
@@ -165,9 +163,7 @@ export default function WeddingQuiz({ isOpen, onClose }) {
         {done ? (
           <ThankYouScreen quiz={quiz} settings={settings} onClose={onClose} />
         ) : (
-          <div
-            className={`transition-all duration-200 ${transitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"}`}
-          >
+          <div className={`transition-all duration-200 ${transitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"}`}>
             {currentQ ? (
               <QuestionStep
                 question={currentQ}
@@ -193,7 +189,7 @@ export default function WeddingQuiz({ isOpen, onClose }) {
 }
 
 function QuestionStep({ question, answers, contact, setContact, onSingleSelect, onToggleMulti, onNext, onBack, isFirst, isLast, submitting }) {
-  const { id, question: text, type, options = [], helper_text } = question;
+  const { id: qId, question: text, type, options = [], helper_text } = question;
 
   return (
     <div>
@@ -205,13 +201,13 @@ function QuestionStep({ question, answers, contact, setContact, onSingleSelect, 
           {options.map(opt => (
             <button
               key={opt.value}
-              onClick={() => onSingleSelect(id, opt.value)}
+              onClick={() => onSingleSelect(qId, opt.value)}
               className={`p-4 rounded-2xl border text-left transition-all duration-200 ${
-                answers[id] === opt.value
+                answers[qId] === opt.value
                   ? "border-yellow-500 bg-yellow-500/10 text-white"
                   : "border-white/10 bg-white/[0.03] text-white/70 hover:border-white/30 hover:text-white"
               }`}
-              style={answers[id] === opt.value ? { borderColor: "#c9a84c", backgroundColor: "rgba(201,168,76,0.1)" } : {}}
+              style={answers[qId] === opt.value ? { borderColor: "#c9a84c", backgroundColor: "rgba(201,168,76,0.1)" } : {}}
             >
               {opt.emoji && <span className="text-2xl block mb-1">{opt.emoji}</span>}
               <span className="text-sm font-medium">{opt.label}</span>
@@ -224,12 +220,12 @@ function QuestionStep({ question, answers, contact, setContact, onSingleSelect, 
         <>
           <div className="grid grid-cols-2 gap-3 mt-6">
             {options.map(opt => {
-              const selected = (answers[id] || []).includes(opt.value);
+              const selected = (answers[qId] || []).includes(opt.value);
               return (
                 <button
                   key={opt.value}
-                  onClick={() => onToggleMulti(id, opt.value)}
-                  className={`p-4 rounded-2xl border text-left transition-all duration-200 ${
+                  onClick={() => onToggleMulti(qId, opt.value)}
+                  className={`relative p-4 rounded-2xl border text-left transition-all duration-200 ${
                     selected ? "border-yellow-500 bg-yellow-500/10 text-white" : "border-white/10 bg-white/[0.03] text-white/70 hover:border-white/30 hover:text-white"
                   }`}
                   style={selected ? { borderColor: "#c9a84c", backgroundColor: "rgba(201,168,76,0.1)" } : {}}
